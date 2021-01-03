@@ -1,0 +1,29 @@
+debug: true
+server:
+  port: 8080
+  servlet-path: /system
+
+management.security.enabled: false
+
+cxf:
+  path: /services
+  servlet.init: 
+    service-list-path: /info
+  jaxrs:
+    component-scan: true
+    classes-scan-packages: org.apache.cxf.jaxrs.swagger,org.apache.cxf.metrics
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ServiceDB?useSSL=false&serverTimezone=UTC
+    username: root
+    password: CHUPETINsql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+      #driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+      show-sql: false
+      open-in-view: false
+endpoints:
+  jmx:
+    enabled: true
+    unique-names: true  
