@@ -1,0 +1,40 @@
+CREATE DATABASE ServiceDB;
+use ServiceDB;
+CREATE TABLE IF NOT EXISTS bank (
+  id INT NOT NULL AUTO_INCREMENT,
+  code VARCHAR(200) NULL,
+  name VARCHAR(200) NULL,
+  address VARCHAR(300) NULL,
+  registration_date DATE NULL,
+  PRIMARY KEY (id));
+
+
+CREATE TABLE IF NOT EXISTS branch_office (
+  id INT NOT NULL AUTO_INCREMENT,
+  code VARCHAR(200) NULL,
+  name VARCHAR(200) NULL,
+  address VARCHAR(300) NULL,
+  registration_date VARCHAR(45) NULL,
+  bank_id INT NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE,
+  INDEX fk_branch_office_bank_idx (bank_id ASC) VISIBLE,
+  CONSTRAINT fk_branch_office_bank
+    FOREIGN KEY (bank_id)
+    REFERENCES bank (id)
+);
+
+
+CREATE TABLE IF NOT EXISTS payment_orders (
+  id INT NOT NULL AUTO_INCREMENT,
+  code VARCHAR(200) NULL,
+  amount DOUBLE NULL,
+  payment_date VARCHAR(45) NULL,
+  branch_office_id INT NOT NULL,
+state ENUM ('pagada','declinada','fallida','anulada'),
+   currency ENUM('soles','dolares'),
+  PRIMARY KEY (id),
+  CONSTRAINT fk_payment_orders_branch_office
+    FOREIGN KEY (branch_office_id)
+    REFERENCES branch_office (id)
+  );
