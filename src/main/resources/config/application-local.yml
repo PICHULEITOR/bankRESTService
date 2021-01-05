@@ -1,0 +1,9 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ServiceDB?useSSL=false&serverTimezone=UTC
+    username: root
+    password: CHUPETINsql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+      #driver-class-name: com.mysql.cj.jdbc.Driver

@@ -4,16 +4,27 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import com.fasterxml.jackson.annotation.JsonFormat;
+/*
 
-
+import org.codehaus.jackson.annote.JsonIgnoreProperties;
+import org.codehaus.jackson.annote.JsonProperty;
+import org.codehaus.jackson.annote.JsonPropertyOrder;
+@JsonPropertyOrder("code")
+@JsonIgnoreProperties(ignoreUnkown=true)
+*/
+@XmlRootElement
 public class BankDto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
+	//@JsonProperty("code")
 	private String code;
+	//@JsonProperty("name")
 	private String name;
+	//@JsonProperty("address")
 	private String address;
+	//@JsonProperty("registrationDate")
 	private Date registrationDate;
 	
 	private List<BranchOfficeDto> branchOffice;

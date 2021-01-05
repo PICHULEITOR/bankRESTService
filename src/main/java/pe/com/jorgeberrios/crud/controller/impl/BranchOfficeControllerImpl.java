@@ -6,12 +6,12 @@ import java.util.List;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+//import javax.ws.rs.Path;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-
+import org.json.JSONObject;
 import pe.com.jorgeberrios.crud.controller.BranchOfficeController;
 import pe.com.jorgeberrios.crud.dto.BranchOfficeDto;
 import pe.com.jorgeberrios.crud.entity.Bank;
@@ -20,7 +20,11 @@ import pe.com.jorgeberrios.crud.mapper.BranchOfficeMapper;
 import pe.com.jorgeberrios.crud.service.BankService;
 import pe.com.jorgeberrios.crud.service.BranchOfficeService;
 import pe.com.jorgeberrios.util.ConvertToUtils;
-
+//import io.swagger.annotations.Api;
+//import org.springframework.stereotype.Service;
+//@Path("/branch_office")
+//@Api("/branch_office")
+//@Service
 public class BranchOfficeControllerImpl implements BranchOfficeController {
 	//private final ObjectMapper JSON_MAPPER=new ObjectMapper();
 	private final Logger logger = LoggerFactory.getLogger(getClass());

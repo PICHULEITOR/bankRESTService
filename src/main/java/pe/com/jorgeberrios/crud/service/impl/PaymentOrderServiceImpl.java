@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pe.com.jorgeberrios.crud.dao.PaymentOrderDao;
 import pe.com.jorgeberrios.crud.entity.PaymentOrder;
 import pe.com.jorgeberrios.crud.service.PaymentOrderService;
-
+import org.springframework.stereotype.Service;
+@Service
 public class PaymentOrderServiceImpl implements PaymentOrderService {
 
 	@Autowired

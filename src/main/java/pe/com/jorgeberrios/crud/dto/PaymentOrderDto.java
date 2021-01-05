@@ -2,17 +2,30 @@ package pe.com.jorgeberrios.crud.dto;
 
 import java.util.Date;
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import pe.com.jorgeberrios.crud.entity.PaymentOrderCurrency;
 import pe.com.jorgeberrios.crud.entity.PaymentOrderState;
-
+import javax.xml.bind.annotation.XmlRootElement;
+/*
+import org.codehaus.jackson.annote.JsonIgnoreProperties;
+import org.codehaus.jackson.annote.JsonProperty;
+import org.codehaus.jackson.annote.JsonPropertyOrder;
+@JsonPropertyOrder("code")
+@JsonIgnoreProperties(ignoreUnkown=true)
+*/
+@XmlRootElement
 public class PaymentOrderDto {
-	
-	private String code; 
-	private Double  amount; 
+	//@JsonProperty("code")
+	private String code;
+	//@JsonProperty("amount")
+	private Double  amount;
+	//@JsonProperty("paymentDate")
 	private Date paymentDate;
+	//@JsonProperty("state")
 	private PaymentOrderState state;
+	//@JsonProperty("currency")
 	private PaymentOrderCurrency currency;
 	
 	public PaymentOrderDto() {
