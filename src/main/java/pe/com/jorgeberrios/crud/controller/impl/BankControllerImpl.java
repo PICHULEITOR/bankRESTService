@@ -11,7 +11,8 @@ import javax.ws.rs.core.Response.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.json.JSONObject;
+import net.minidev.json.JSONObject;
+//import org.json.JSONObject;
 
 import pe.com.jorgeberrios.crud.controller.BankController;
 import pe.com.jorgeberrios.crud.dto.BankDto;
@@ -36,13 +37,19 @@ public class BankControllerImpl implements BankController {
 	public Response getBanks() {
 		// TODO Auto-generated method stub
 		logger.info("START [GET]/get-banks:{}");
-		Object obj=new JSONObject();
+		JSONObject obj=new JSONObject();
+		//Object obj=new Object();
 		List<BankDto> listOfBanks=new ArrayList<>();
 		try {
 			listOfBanks=bankMapper.toListDto(bankService.findAll());
+			//obj=ConvertToUtils.convertFromJsonToObject(ConvertToUtils.convertFromObjectToJson(listOfBanks),Object.class);		
+			
+			//ConvertToUtils.convertFromObjectToJsonResponse(listOfBanks,"banks");
+			//obj=listOfBanks;
 			//ConvertToUtils.
-			//obj.put("banks",listOfBanks);
-
+			//Object[] ra = null;
+			obj.put("banks",listOfBanks);
+			
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 			return Response.status(Status.EXPECTATION_FAILED).entity(e.getMessage()).type(MediaType.APPLICATION_JSON).build();
@@ -54,37 +61,39 @@ public class BankControllerImpl implements BankController {
 	@Override
 	public Response getBankByCode(String code) {
 		logger.info("START [GET]/get-bank-by-code:{}");
-		JSONObject obj=new JSONObject();
+		//JSONObject obj=new JSONObject();
+		
 		BankDto bankDto=new BankDto();
 		try {
 			bankDto=bankMapper.toDto(bankService.findByCode(code));
-			obj.put("bank",bankDto);
-			
+			//obj.put("bank",bankDto);
+			if(bankDto==null) {
+				return Response.status(Status.NOT_FOUND).entity("NO DATA FOUND").type(MediaType.APPLICATION_JSON).build();
+
+			}else {
+				logger.info("END [GET]/get-bank-by-code:{}",ConvertToUtils.convertFromObjectToJson(bankDto));
+				return Response.status(Status.OK).entity(bankDto).type(MediaType.APPLICATION_JSON).build();
+			}
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 			return Response.status(Status.EXPECTATION_FAILED).entity(e.getMessage()).type(MediaType.APPLICATION_JSON).build();
 		}
-		if(bankDto==null) {
-			return Response.status(Status.NOT_FOUND).entity("NO DATA FOUND").type(MediaType.APPLICATION_JSON).build();
-
-		}else {
-			logger.info("END [GET]/get-bank-by-code:{}",ConvertToUtils.convertFromObjectToJson(bankDto));
-			return Response.status(Status.OK).entity(obj).type(MediaType.APPLICATION_JSON).build();
-		}
+		
 	}
 
 	@Override
 	public Response createBank(BankDto bankDto) {
 		// TODO Auto-generated method stub
 		logger.info("START [POST]/create-bank:{}");
-		JSONObject obj=new JSONObject();
-		if(bankService.create(new Bank(bankDto.getCode(), bankDto.getName(), bankDto.getAddress(),bankDto.getRegistrationDate()))) {
+		//JSONObject obj=new JSONObject();
+		try {	
+			bankService.create(bankDto);
 			logger.info("END [POST]/create-bank:{}");
 			return Response.status(Status.OK).entity("SUCCESS CREATE").type(MediaType.APPLICATION_JSON).build();
 
-		}
-		else {
-			return Response.status(Status.EXPECTATION_FAILED).entity("AN ERROR OCURRED TRYING TO CREATE").type(MediaType.APPLICATION_JSON).build();
+		}catch(Exception e) {
+			return Response.status(Status.EXPECTATION_FAILED).entity(e.getMessage()).type(MediaType.APPLICATION_JSON).build();
+
 		}
 		
 	}
@@ -93,13 +102,19 @@ public class BankControllerImpl implements BankController {
 	public Response update(String code, BankDto bankDto) {
 		// TODO Auto-generated method stub
 		logger.info("START [PUT]/update-bank:{}");
-		if(bankService.save(new Bank(bankDto.getCode(), bankDto.getName(), bankDto.getAddress(),bankDto.getRegistrationDate()))) {
-			logger.info("END [PUT]/update-bank:{}");
-			return Response.status(Status.OK).entity("SUCCESS UPDATE").type(MediaType.APPLICATION_JSON).build();
+		try {
+			if(bankService.save(new Bank(bankDto.getCode(), bankDto.getName(), bankDto.getAddress(),bankDto.getRegistrationDate()))) {
+				logger.info("END [PUT]/update-bank:{}");
+				return Response.status(Status.OK).entity("SUCCESS UPDATE").type(MediaType.APPLICATION_JSON).build();
+			}
+			else {
+				return Response.status(Status.NOT_FOUND).entity("NO DATA FOUND").type(MediaType.APPLICATION_JSON).build();
+			}
+		}catch(Exception e) {
+			return Response.status(Status.EXPECTATION_FAILED).entity(e.getMessage()).type(MediaType.APPLICATION_JSON).build();
+
 		}
-		else {
-			return Response.status(Status.EXPECTATION_FAILED).entity("AN ERROR OCURRED TRYING TO CREATE").type(MediaType.APPLICATION_JSON).build();
-		}
+		
 	}
 
 	@Override

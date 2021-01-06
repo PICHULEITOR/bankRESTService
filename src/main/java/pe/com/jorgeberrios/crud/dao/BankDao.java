@@ -9,6 +9,7 @@ import pe.com.jorgeberrios.crud.entity.Bank;
 
 @Repository
 public interface BankDao extends JpaRepository<Bank,Long> {
+	@Query(value="SELECT * FROM bank WHERE code= :code",nativeQuery=true)
 	Bank findByCode(String code);
 	void deleteByCode(String code);
 	boolean existsByCode(String code);

@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name="payment_order")
+@Table(name="payment_orders")
 public class PaymentOrder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

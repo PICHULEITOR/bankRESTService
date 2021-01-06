@@ -18,7 +18,8 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 @Entity
 @Table(name="branch_office")
 public class BranchOffice implements Serializable{
@@ -39,6 +40,7 @@ public class BranchOffice implements Serializable{
 	@ManyToOne
 	private Bank bank;
 	@JsonBackReference
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="branchOffice")
 	private List<PaymentOrder> paymentOrder;
 	public BranchOffice() {

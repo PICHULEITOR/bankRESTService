@@ -13,8 +13,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 public class Bank implements Serializable{
@@ -33,6 +39,7 @@ public class Bank implements Serializable{
 	@Column(name="registration_date")
 	private Date registrationDate;
 	@JsonBackReference
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="bank")
 	private List<BranchOffice> branchOffice;
 	public Bank() {

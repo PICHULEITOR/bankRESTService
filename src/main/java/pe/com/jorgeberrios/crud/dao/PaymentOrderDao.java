@@ -14,9 +14,9 @@ public interface PaymentOrderDao extends JpaRepository<PaymentOrder,Long>{
 	PaymentOrder findByCode(String code);
 	void deleteByCode(String code);
 	boolean existsByCode(String code);
-	@Query(value="SELECT id FROM payment_order WHERE code= :code",nativeQuery=true)
+	@Query(value="SELECT id FROM payment_orders WHERE code= :code",nativeQuery=true)
 	Long findIdByCode(@Param("code") String code);
-	@Query(value="SELECT P from payment_order P INNER JOIN branch_office B ON P.branch_office_id=B.id where B.code= :branchOfficeCode AND P.currency= :currencyType",nativeQuery=true)
+	@Query(value="SELECT  P.id,P.code,P.amount,P.payment_date,P.branch_office_id,P.state,P.currency from payment_orders P INNER JOIN branch_office B ON P.branch_office_id=B.id where B.code= :branchOfficeCode AND P.currency= :currencyType",nativeQuery=true)
 	List<PaymentOrder> findByBranchOfficeCodeAndCurrencyType(@Param("branchOfficeCode")String branchOfficeCode,@Param("currencyType")String currencyType);
 	
 }
